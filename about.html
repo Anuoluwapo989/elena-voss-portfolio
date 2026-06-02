@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="About Elena Voss — photographer, visual storyteller, and observer of quiet moments." />
+    <title>About — Elena Voss</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+        /* ───── Reset & Tokens (shared) ───── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #090909;
+            --fg: #e5e5e5;
+            --muted: #8c8c8c;
+            --subtle: #333;
+            --accent: #d4d4d4;
+            --serif: 'Playfair Display', Georgia, serif;
+            --sans: 'Inter', system-ui, sans-serif;
+            --ease: cubic-bezier(.4, 0, .2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: var(--sans);
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: #fff;
+            color: #000;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ───── Navigation ───── */
+        nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            backdrop-filter: blur(24px) saturate(1.3);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3);
+            background: rgba(9, 9, 9, .65);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 60px);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: .01em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: .78rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color .3s var(--ease);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--fg);
+            transition: width .3s var(--ease);
+        }
+
+        .nav-links a:hover {
+            color: var(--fg);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--fg);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* ───── Layout helpers ───── */
+        .pad {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 60px);
+        }
+
+        .section {
+            padding: clamp(80px, 12vw, 160px) 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--subtle);
+        }
+
+        .section-label {
+            font-size: .68rem;
+            font-weight: 500;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        /* ───── Page Hero (compact) ───── */
+        .page-hero {
+            padding-top: clamp(140px, 18vw, 220px);
+            padding-bottom: clamp(60px, 8vw, 100px);
+        }
+
+        .page-hero h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(2.6rem, 6vw, 5.5rem);
+            line-height: 1.05;
+            letter-spacing: -.02em;
+        }
+
+        .page-hero h1 em {
+            font-style: italic;
+        }
+
+        .page-hero .subtitle {
+            margin-top: 20px;
+            font-size: .88rem;
+            color: var(--muted);
+            max-width: 40ch;
+            line-height: 1.7;
+        }
+
+        /* ───── Intro Split ───── */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: clamp(40px, 6vw, 100px);
+            align-items: start;
+        }
+
+        .intro-image {
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .intro-image img {
+            transition: transform .7s var(--ease);
+        }
+
+        .intro-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .intro-image-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: .68rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .5);
+        }
+
+        .intro-text {
+            padding-top: clamp(20px, 4vw, 60px);
+        }
+
+        .intro-text h2 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+            line-height: 1.25;
+            margin-bottom: 28px;
+        }
+
+        .intro-text p {
+            font-size: .88rem;
+            color: var(--muted);
+            line-height: 1.85;
+            max-width: 46ch;
+        }
+
+        .intro-text p+p {
+            margin-top: 18px;
+        }
+
+        .intro-text .highlight {
+            color: var(--fg);
+            font-weight: 400;
+        }
+
+        /* ───── Philosophy / Values ───── */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--subtle);
+            border: 1px solid var(--subtle);
+            margin-top: clamp(48px, 6vw, 80px);
+        }
+
+        .value-card {
+            background: var(--bg);
+            padding: clamp(32px, 4vw, 56px) clamp(24px, 3vw, 40px);
+            transition: background .35s var(--ease);
+        }
+
+        .value-card:hover {
+            background: #111;
+        }
+
+        .value-num {
+            font-family: var(--serif);
+            font-size: 2rem;
+            color: var(--subtle);
+            margin-bottom: 20px;
+            transition: color .35s var(--ease);
+        }
+
+        .value-card:hover .value-num {
+            color: var(--fg);
+        }
+
+        .value-card h3 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .value-card p {
+            font-size: .82rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ───── Timeline ───── */
+        .timeline {
+            margin-top: clamp(48px, 6vw, 80px);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 40px;
+            padding: 32px 0;
+            border-bottom: 1px solid var(--subtle);
+            transition: background .3s var(--ease);
+        }
+
+        .timeline-item:first-child {
+            border-top: 1px solid var(--subtle);
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, .015);
+        }
+
+        .timeline-year {
+            font-family: var(--serif);
+            font-size: 1.3rem;
+            color: var(--subtle);
+            padding-top: 2px;
+            transition: color .3s var(--ease);
+        }
+
+        .timeline-item:hover .timeline-year {
+            color: var(--fg);
+        }
+
+        .timeline-content h3 {
+            font-weight: 500;
+            font-size: .92rem;
+            margin-bottom: 6px;
+        }
+
+        .timeline-content p {
+            font-size: .8rem;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        /* ───── Gear / Process ───── */
+        .process-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: clamp(40px, 6vw, 100px);
+            align-items: center;
+        }
+
+        .process-text h2 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+            line-height: 1.25;
+            margin-bottom: 24px;
+        }
+
+        .process-text p {
+            font-size: .88rem;
+            color: var(--muted);
+            line-height: 1.85;
+            max-width: 46ch;
+        }
+
+        .process-text p+p {
+            margin-top: 16px;
+        }
+
+        .process-image {
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+        }
+
+        .process-image img {
+            transition: transform .7s var(--ease);
+        }
+
+        .process-image:hover img {
+            transform: scale(1.03);
+        }
+
+        /* ───── Stats Bar ───── */
+        .stats-bar {
+            display: flex;
+            gap: 1px;
+            background: var(--subtle);
+            border: 1px solid var(--subtle);
+        }
+
+        .stat {
+            flex: 1;
+            background: var(--bg);
+            padding: clamp(32px, 4vw, 52px) 24px;
+            text-align: center;
+            transition: background .35s var(--ease);
+        }
+
+        .stat:hover {
+            background: #111;
+        }
+
+        .stat-value {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1;
+        }
+
+        .stat-label {
+            margin-top: 8px;
+            font-size: .7rem;
+            color: var(--muted);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        /* ───── Clients / Publications ───── */
+        .logos-row {
+            margin-top: clamp(48px, 6vw, 80px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .logo-item {
+            font-size: .82rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--subtle);
+            transition: color .35s var(--ease);
+            white-space: nowrap;
+        }
+
+        .logo-item:hover {
+            color: var(--fg);
+        }
+
+        /* ───── CTA ───── */
+        .cta {
+            text-align: center;
+            padding: clamp(100px, 14vw, 200px) 24px;
+        }
+
+        .cta h2 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(2rem, 4.5vw, 3.6rem);
+            line-height: 1.1;
+            letter-spacing: -.015em;
+        }
+
+        .cta h2 em {
+            font-style: italic;
+        }
+
+        .cta p {
+            margin-top: 20px;
+            font-size: .88rem;
+            color: var(--muted);
+            max-width: 44ch;
+            margin-inline: auto;
+            line-height: 1.7;
+        }
+
+        .cta-actions {
+            margin-top: 40px;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            padding: 16px 40px;
+            border: 1px solid var(--subtle);
+            background: transparent;
+            color: var(--fg);
+            font-family: var(--sans);
+            font-size: .8rem;
+            font-weight: 400;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background .35s var(--ease), border-color .35s var(--ease);
+        }
+
+        .btn-outline:hover {
+            background: var(--fg);
+            color: var(--bg);
+            border-color: var(--fg);
+        }
+
+        .btn-ghost {
+            padding: 16px 40px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-family: var(--sans);
+            font-size: .8rem;
+            font-weight: 400;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color .35s var(--ease);
+        }
+
+        .btn-ghost:hover {
+            color: var(--fg);
+        }
+
+        /* ───── Footer ───── */
+        footer {
+            border-top: 1px solid var(--subtle);
+            padding: 40px 0;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 60px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copy {
+            font-size: .72rem;
+            color: var(--muted);
+            letter-spacing: .04em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: .72rem;
+            color: var(--muted);
+            letter-spacing: .04em;
+            transition: color .3s var(--ease);
+        }
+
+        .footer-links a:hover {
+            color: var(--fg);
+        }
+
+        /* ───── Reveal ───── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .8s var(--ease), transform .8s var(--ease);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ───── Responsive ───── */
+        @media (max-width: 900px) {
+            .intro-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intro-text {
+                padding-top: 0;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+            }
+
+            .timeline-item {
+                grid-template-columns: 80px 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none;
+            }
+
+            .logos-row {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Shared Enhancements -->
+    <div class="page-loader">
+        <span class="loader-logo">Elena Voss</span>
+        <span class="loader-line"></span>
+    </div>
+    <div class="scroll-progress"></div>
+    <div class="grain"></div>
+    <div class="custom-cursor"></div>
+    <button class="back-to-top" aria-label="Back to top">↑</button>
+
+    <!-- Nav -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="logo">Elena Voss</a>
+            <ul class="nav-links">
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="prints.html">Prints</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="work.html">Work</a>
+        <a href="about.html" class="active">About</a>
+        <a href="prints.html">Prints</a>
+        <a href="contact.html">Contact</a>
+        <div class="mobile-menu-social">
+            <a href="https://instagram.com/elenavoss">Instagram</a>
+            <a href="https://behance.net/elenavoss">Behance</a>
+        </div>
+    </div>
+
+    <main>
+    <!-- Page Hero -->
+    <section class="page-hero pad">
+        <h1 class="reveal">The eye<br /><em>behind the lens</em></h1>
+        <p class="subtitle reveal">Photographer, wanderer, and collector of quiet moments since 2014.</p>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- Intro -->
+    <section class="section">
+        <div class="pad">
+            <div class="intro-grid">
+                <div class="intro-image reveal">
+                    <img src="images/portrait.png" alt="Elena Voss" />
+                    <span class="intro-image-caption">Montreal, 2024</span>
+                </div>
+                <div class="intro-text reveal">
+                    <p class="section-label">The Story</p>
+                    <h2>I photograph what silence looks like</h2>
+                    <p>I picked up a camera at nineteen because I didn't know how to say what I was feeling. A decade
+                        later, I still don't — but <span class="highlight">now I have a body of work that speaks
+                            instead.</span></p>
+                    <p>My practice is rooted in patience. I wait for the light to change, for the street to empty, for
+                        the moment between moments. The result is work that feels still, even when the world around it
+                        isn't.</p>
+                    <p>Based in <span class="highlight">Montreal, Canada</span>. I split my time between personal
+                        projects, editorial commissions, and fine art prints sold through galleries in North America and
+                        Europe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- Philosophy -->
+    <section class="section">
+        <div class="pad">
+            <p class="section-label reveal">Philosophy</p>
+            <h2 class="reveal"
+                style="font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.2;max-width:22ch;">
+                Three principles that guide every frame</h2>
+
+            <div class="values-grid reveal">
+                <div class="value-card">
+                    <div class="value-num">01</div>
+                    <h3>Patience over speed</h3>
+                    <p>Great photographs aren't taken — they're waited for. I never rush a shoot. I return to locations,
+                        revisit light, and let the scene reveal itself in its own time.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-num">02</div>
+                    <h3>Less is always more</h3>
+                    <p>I remove until there's nothing left to remove. Every element in the frame exists for a reason. If
+                        it doesn't serve the image, it doesn't belong.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-num">03</div>
+                    <h3>Feeling over technique</h3>
+                    <p>Technical perfection means nothing if the image doesn't make you feel something. Mood,
+                        atmosphere, and emotion come first — always.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar reveal">
+        <div class="stat">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Years Active</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">34</div>
+            <div class="stat-label">Countries</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Solo Exhibitions</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">2k+</div>
+            <div class="stat-label">Prints Sold</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">16</div>
+            <div class="stat-label">Awards</div>
+        </div>
+    </div>
+
+    <div class="pad">
+        <div class="divider" style="margin-top:0;"></div>
+    </div>
+
+    <!-- Process -->
+    <section class="section">
+        <div class="pad">
+            <div class="process-grid">
+                <div class="process-text reveal">
+                    <p class="section-label">Process</p>
+                    <h2>How the work gets made</h2>
+                    <p>I shoot primarily with natural light. Most of my personal work is captured on film — Kodak Portra
+                        and Ilford HP5 — then scanned and lightly processed. For editorial and commercial projects, I
+                        work digitally with Fujifilm and Leica systems.</p>
+                    <p>My post-processing is intentionally restrained. I want the image to look like what it felt like
+                        to be there — not a manufactured version of reality. Minimal retouching. No composites. No AI
+                        generation.</p>
+                </div>
+                <div class="process-image reveal">
+                    <img src="images/landscape.png" alt="Mountain landscape" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- Journey / Timeline -->
+    <section class="section">
+        <div class="pad">
+            <p class="section-label reveal">Journey</p>
+            <h2 class="reveal"
+                style="font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.2;margin-bottom:0;">
+                Milestones along the way</h2>
+
+            <div class="timeline reveal">
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3>"Quiet Hours" solo exhibition — Galerie Nichido, Montreal</h3>
+                        <p>A 40-print retrospective spanning five years of street and landscape work across three
+                            continents.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3>World Press Photo — Honorable Mention, Nature</h3>
+                        <p>Recognized for the series "Still Morning" documenting endangered ecosystems in British
+                            Columbia.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <h3>Published in The New York Times Magazine</h3>
+                        <p>12-page editorial feature accompanying a long-form essay on solitude in modern cities.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h3>First monograph: "The Space Between"</h3>
+                        <p>Published by Aperture. 180 pages of landscape and architectural photography from Patagonia to
+                            the Nordics.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2018</div>
+                    <div class="timeline-content">
+                        <h3>Sony World Photography Awards — Finalist</h3>
+                        <p>Selected from 320,000 entries for the Open Competition, Architecture category.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2014</div>
+                    <div class="timeline-content">
+                        <h3>First camera, first obsession</h3>
+                        <p>Bought a used Nikon FM2 at a flea market in Montreal. Haven't stopped shooting since.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- Featured In — Marquee -->
+    <section class="section">
+        <div class="pad">
+            <p class="section-label reveal" style="text-align:center;">Featured In</p>
+        </div>
+
+        <div class="marquee reveal">
+            <div class="marquee-track">
+                <!-- Set 1 -->
+                <div class="marquee-item"><img src="images/NYTimes.svg" alt="The New York Times" /></div>
+                <div class="marquee-item"><img src="images/natgeo.png" alt="National Geographic" /></div>
+                <div class="marquee-item"><img src="images/aperture.svg" alt="Aperture" /></div>
+                <div class="marquee-item"><img src="images/bjp.svg" alt="British Journal of Photography" /></div>
+                <div class="marquee-item"><img src="images/vogueitalia.svg" alt="Vogue Italia" /></div>
+                <div class="marquee-item"><img src="images/monocle.svg" alt="Monocle" /></div>
+                <div class="marquee-item"><img src="images/sony.png" alt="Sony" /></div>
+                <!-- Set 2 (duplicate for seamless loop) -->
+                <div class="marquee-item"><img src="images/NYTimes.svg" alt="The New York Times" /></div>
+                <div class="marquee-item"><img src="images/natgeo.png" alt="National Geographic" /></div>
+                <div class="marquee-item"><img src="images/aperture.svg" alt="Aperture" /></div>
+                <div class="marquee-item"><img src="images/bjp.svg" alt="British Journal of Photography" /></div>
+                <div class="marquee-item"><img src="images/vogueitalia.svg" alt="Vogue Italia" /></div>
+                <div class="marquee-item"><img src="images/monocle.svg" alt="Monocle" /></div>
+                <div class="marquee-item"><img src="images/sony.png" alt="Sony" /></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta">
+        <p class="section-label reveal">Work Together</p>
+        <h2 class="reveal">Let's make<br /><em>something lasting</em></h2>
+        <p class="reveal">Available for commissions, editorial assignments, exhibitions, and print inquiries.</p>
+        <div class="cta-actions reveal">
+            <a href="mailto:hello@elenavoss.com" class="btn-outline">Get in Touch →</a>
+            <a href="work.html" class="btn-ghost">View Work</a>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <div class="newsletter-bar">
+        <div class="newsletter-inner">
+            <div class="newsletter-text">
+                <h3>Stay in the frame</h3>
+                <p>New work, prints, and behind-the-scenes — once a month, no spam.</p>
+            </div>
+            <form class="newsletter-form" onsubmit="return false;">
+                <input type="email" placeholder="Your email" required aria-label="Email Address" />
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <span class="footer-copy">© 2026 Elena Voss. All rights reserved.</span>
+            <ul class="footer-links">
+                <li><a href="https://instagram.com/elenavoss">Instagram</a></li>
+                <li><a href="https://behance.net/elenavoss">Behance</a></li>
+                <li><a href="prints.html">Prints</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    </script>
+    <script src="shared.js"></script>
+
+</body>
+
+</html>

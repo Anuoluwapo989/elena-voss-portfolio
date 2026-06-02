@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Photography portfolio — landscapes, portraits, street, and fine art photography." />
+    <title>Elena Voss — Photography</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+        /* ───── Reset & Tokens ───── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #090909;
+            --fg: #e5e5e5;
+            --muted: #8c8c8c;
+            --subtle: #333;
+            --accent: #d4d4d4;
+            --serif: 'Playfair Display', Georgia, serif;
+            --sans: 'Inter', system-ui, sans-serif;
+            --ease: cubic-bezier(.4, 0, .2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: var(--sans);
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: #fff;
+            color: #000;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ───── Navigation ───── */
+        nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            backdrop-filter: blur(24px) saturate(1.3);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3);
+            background: rgba(9, 9, 9, .65);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 60px);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: .01em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: .78rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color .3s var(--ease);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--fg);
+            transition: width .3s var(--ease);
+        }
+
+        .nav-links a:hover {
+            color: var(--fg);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ───── Hero ───── */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 clamp(24px, 5vw, 60px) clamp(48px, 8vh, 100px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(.45) contrast(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--bg) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(3rem, 8vw, 7.5rem);
+            line-height: 1;
+            letter-spacing: -.02em;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .hero-meta {
+            margin-top: 24px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .hero-meta span {
+            font-size: .75rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ───── Section layout ───── */
+        .pad {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 60px);
+        }
+
+        .section {
+            padding: clamp(80px, 12vw, 160px) 0;
+        }
+
+        .section-header {
+            margin-bottom: clamp(48px, 6vw, 80px);
+        }
+
+        .section-label {
+            font-size: .68rem;
+            font-weight: 500;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            line-height: 1.15;
+            letter-spacing: -.01em;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--subtle);
+        }
+
+        /* ───── Gallery Grid ───── */
+        .gallery {
+            display: grid;
+            gap: 4px;
+        }
+
+        .gallery-masonry {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 420px 320px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            transition: transform .6s var(--ease), filter .6s var(--ease);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.04);
+            filter: brightness(.85);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 28px 24px;
+            background: linear-gradient(to top, rgba(0, 0, 0, .7), transparent);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .4s var(--ease), transform .4s var(--ease);
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-caption h3 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: 1.05rem;
+        }
+
+        .gallery-caption p {
+            font-size: .72rem;
+            color: var(--muted);
+            margin-top: 4px;
+            letter-spacing: .04em;
+        }
+
+        .gallery-masonry .gallery-item:first-child {
+            grid-row: span 2;
+        }
+
+        /* ───── Featured Strip ───── */
+        .strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            margin-top: clamp(48px, 6vw, 80px);
+        }
+
+        .strip-item {
+            aspect-ratio: 4 / 5;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .strip-item img {
+            transition: transform .6s var(--ease);
+        }
+
+        .strip-item:hover img {
+            transform: scale(1.04);
+        }
+
+        .strip-label {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: .7rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .7);
+        }
+
+        /* ───── About Split ───── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(40px, 6vw, 100px);
+            align-items: center;
+        }
+
+        .about-image {
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+        }
+
+        .about-image img {
+            transition: transform .6s var(--ease);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .about-text .section-label {
+            margin-bottom: 16px;
+        }
+
+        .about-text h2 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .about-text p {
+            font-size: .9rem;
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 42ch;
+        }
+
+        .about-text p+p {
+            margin-top: 16px;
+        }
+
+        .about-stats {
+            margin-top: 40px;
+            display: flex;
+            gap: 48px;
+        }
+
+        .stat-value {
+            font-family: var(--serif);
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: .7rem;
+            color: var(--muted);
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+        /* ───── Categories Horizontal ───── */
+        .categories {
+            display: flex;
+            gap: 1px;
+            background: var(--subtle);
+            border-top: 1px solid var(--subtle);
+            border-bottom: 1px solid var(--subtle);
+        }
+
+        .cat-item {
+            flex: 1;
+            background: var(--bg);
+            padding: clamp(36px, 5vw, 64px) clamp(20px, 3vw, 40px);
+            text-align: center;
+            cursor: pointer;
+            transition: background .35s var(--ease);
+        }
+
+        .cat-item:hover {
+            background: #111;
+        }
+
+        .cat-num {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1;
+            color: var(--subtle);
+            transition: color .35s var(--ease);
+        }
+
+        .cat-item:hover .cat-num {
+            color: var(--fg);
+        }
+
+        .cat-name {
+            margin-top: 12px;
+            font-size: .72rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ───── Contact / CTA ───── */
+        .contact {
+            text-align: center;
+            padding: clamp(100px, 14vw, 200px) 24px;
+        }
+
+        .contact .section-label {
+            margin-bottom: 20px;
+        }
+
+        .contact h2 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            line-height: 1.1;
+            letter-spacing: -.015em;
+        }
+
+        .contact h2 em {
+            font-style: italic;
+        }
+
+        .contact p {
+            margin-top: 20px;
+            font-size: .88rem;
+            color: var(--muted);
+            max-width: 44ch;
+            margin-inline: auto;
+            line-height: 1.7;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+            padding: 16px 40px;
+            border: 1px solid var(--subtle);
+            border-radius: 0;
+            background: transparent;
+            color: var(--fg);
+            font-family: var(--sans);
+            font-size: .8rem;
+            font-weight: 400;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background .35s var(--ease), border-color .35s var(--ease);
+        }
+
+        .contact-btn:hover {
+            background: var(--fg);
+            color: var(--bg);
+            border-color: var(--fg);
+        }
+
+        /* ───── Footer ───── */
+        footer {
+            border-top: 1px solid var(--subtle);
+            padding: 40px 0;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(24px, 5vw, 60px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copy {
+            font-size: .72rem;
+            color: var(--muted);
+            letter-spacing: .04em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: .72rem;
+            color: var(--muted);
+            letter-spacing: .04em;
+            transition: color .3s var(--ease);
+        }
+
+        .footer-links a:hover {
+            color: var(--fg);
+        }
+
+        /* ───── Reveal Animations ───── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .8s var(--ease), transform .8s var(--ease);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ───── Lightbox ───── */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, .92);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s var(--ease);
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 88vh;
+            object-fit: contain;
+            transform: scale(.94);
+            transition: transform .4s var(--ease);
+        }
+
+        .lightbox.active img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 28px;
+            right: 32px;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: color .3s var(--ease);
+            font-family: var(--sans);
+        }
+
+        .lightbox-close:hover {
+            color: var(--fg);
+        }
+
+        /* ───── Responsive ───── */
+        @media (max-width: 900px) {
+            .gallery-masonry {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 300px 240px 240px;
+            }
+
+            .gallery-masonry .gallery-item:first-child {
+                grid-row: span 1;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .strip {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none;
+            }
+
+            .gallery-masonry {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .gallery-item {
+                aspect-ratio: 4/3;
+            }
+
+            .strip {
+                grid-template-columns: 1fr;
+            }
+
+            .categories {
+                flex-direction: column;
+            }
+
+            .about-stats {
+                flex-direction: column;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Shared Enhancements -->
+    <div class="page-loader">
+        <span class="loader-logo">Elena Voss</span>
+        <span class="loader-line"></span>
+    </div>
+    <div class="scroll-progress"></div>
+    <div class="grain"></div>
+    <div class="custom-cursor"></div>
+    <button class="back-to-top" aria-label="Back to top">↑</button>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" tabindex="-1">
+        <button class="lightbox-close" id="lb-close" aria-label="Close lightbox">✕</button>
+        <img id="lb-img" src="" alt="" aria-hidden="true" />
+    </div>
+
+    <!-- Nav -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="logo">Elena Voss</a>
+            <ul class="nav-links">
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="prints.html">Prints</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="work.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="prints.html">Prints</a>
+        <a href="contact.html">Contact</a>
+        <div class="mobile-menu-social">
+            <a href="https://instagram.com/elenavoss">Instagram</a>
+            <a href="https://behance.net/elenavoss">Behance</a>
+        </div>
+    </div>
+
+    <main>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="images/landscape.png" alt="Mountain landscape at golden hour" />
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="reveal">Light &amp;<br /><em>Silence</em></h1>
+            <div class="hero-meta reveal">
+                <span>Photography</span>
+                <span>Fine Art</span>
+                <span>Since 2014</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <div class="categories reveal">
+        <div class="cat-item" role="button" tabindex="0">
+            <div class="cat-num">01</div>
+            <div class="cat-name">Landscape</div>
+        </div>
+        <div class="cat-item" role="button" tabindex="0">
+            <div class="cat-num">02</div>
+            <div class="cat-name">Portrait</div>
+        </div>
+        <div class="cat-item" role="button" tabindex="0">
+            <div class="cat-num">03</div>
+            <div class="cat-name">Street</div>
+        </div>
+        <div class="cat-item" role="button" tabindex="0">
+            <div class="cat-num">04</div>
+            <div class="cat-name">Architecture</div>
+        </div>
+    </div>
+
+    <!-- Selected Work -->
+    <section id="work" class="section">
+        <div class="pad">
+            <div class="section-header reveal">
+                <p class="section-label">Selected Work</p>
+                <h2 class="section-title">Moments caught<br />between breaths</h2>
+            </div>
+
+            <div class="gallery gallery-masonry reveal">
+                <div class="gallery-item" data-lb role="button" tabindex="0">
+                    <img src="images/street.png" alt="Urban street at night" />
+                    <div class="gallery-caption">
+                        <h3>Neon Passage</h3>
+                        <p>Tokyo — 2024</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-lb role="button" tabindex="0">
+                    <img src="images/architecture.png" alt="Concrete architecture" />
+                    <div class="gallery-caption">
+                        <h3>Form & Shadow</h3>
+                        <p>Berlin — 2023</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-lb role="button" tabindex="0">
+                    <img src="images/nature.png" alt="Morning dew on leaves" />
+                    <div class="gallery-caption">
+                        <h3>Still Morning</h3>
+                        <p>British Columbia — 2024</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-lb role="button" tabindex="0">
+                    <img src="images/travel.png" alt="European alleyway" />
+                    <div class="gallery-caption">
+                        <h3>Old Quarter</h3>
+                        <p>Lisbon — 2023</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-lb role="button" tabindex="0">
+                    <img src="images/landscape.png" alt="Mountain landscape" />
+                    <div class="gallery-caption">
+                        <h3>Above the Clouds</h3>
+                        <p>Patagonia — 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- Featured Series -->
+    <section class="section">
+        <div class="pad">
+            <div class="section-header reveal">
+                <p class="section-label">Featured Series</p>
+                <h2 class="section-title">Quiet Hours</h2>
+            </div>
+
+            <div class="strip reveal">
+                <div class="strip-item" data-lb role="button" tabindex="0">
+                    <img src="images/portrait.png" alt="Portrait in dramatic light" />
+                    <span class="strip-label">I — Solitude</span>
+                </div>
+                <div class="strip-item" data-lb role="button" tabindex="0">
+                    <img src="images/street.png" alt="Night street reflection" />
+                    <span class="strip-label">II — Transit</span>
+                </div>
+                <div class="strip-item" data-lb role="button" tabindex="0">
+                    <img src="images/nature.png" alt="Nature detail" />
+                    <span class="strip-label">III — Stillness</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- About -->
+    <section id="about" class="section">
+        <div class="pad">
+            <div class="about-grid">
+                <div class="about-image reveal" data-lb role="button" tabindex="0">
+                    <img src="images/portrait.png" alt="The photographer" />
+                </div>
+                <div class="about-text reveal">
+                    <p class="section-label">About</p>
+                    <h2>Seeing the world in pauses</h2>
+                    <p>I'm a photographer drawn to the spaces between moments — the light just before it shifts, the
+                        street just after the crowd passes. My work explores silence, structure, and the quiet drama of
+                        everyday life.</p>
+                    <p>Based in Montreal. Available for commissions, editorial, and fine art prints worldwide.</p>
+                    <div class="about-stats">
+                        <div>
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Years</div>
+                        </div>
+                        <div>
+                            <div class="stat-value">34</div>
+                            <div class="stat-label">Countries</div>
+                        </div>
+                        <div>
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Exhibitions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- Featured In — Marquee -->
+    <section class="section">
+        <div class="pad">
+            <p class="section-label reveal" style="text-align:center;">Featured In</p>
+        </div>
+
+        <div class="marquee reveal">
+            <div class="marquee-track">
+                <!-- Set 1 -->
+                <div class="marquee-item"><img src="images/NYTimes.svg" alt="The New York Times" /></div>
+                <div class="marquee-item"><img src="images/natgeo.png" alt="National Geographic" /></div>
+                <div class="marquee-item"><img src="images/aperture.svg" alt="Aperture" /></div>
+                <div class="marquee-item"><img src="images/bjp.svg" alt="British Journal of Photography" /></div>
+                <div class="marquee-item"><img src="images/vogueitalia.svg" alt="Vogue Italia" /></div>
+                <div class="marquee-item"><img src="images/monocle.svg" alt="Monocle" /></div>
+                <div class="marquee-item"><img src="images/sony.png" alt="Sony" /></div>
+                <!-- Set 2 (duplicate for seamless loop) -->
+                <div class="marquee-item"><img src="images/NYTimes.svg" alt="The New York Times" /></div>
+                <div class="marquee-item"><img src="images/natgeo.png" alt="National Geographic" /></div>
+                <div class="marquee-item"><img src="images/aperture.svg" alt="Aperture" /></div>
+                <div class="marquee-item"><img src="images/bjp.svg" alt="British Journal of Photography" /></div>
+                <div class="marquee-item"><img src="images/vogueitalia.svg" alt="Vogue Italia" /></div>
+                <div class="marquee-item"><img src="images/monocle.svg" alt="Monocle" /></div>
+                <div class="marquee-item"><img src="images/sony.png" alt="Sony" /></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="pad">
+        <div class="divider"></div>
+    </div>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <p class="section-label reveal">Get in Touch</p>
+        <h2 class="reveal">Let's create<br /><em>something quiet</em></h2>
+        <p class="reveal">Open to collaborations, commissions, and the occasional conversation about light.</p>
+        <a href="contact.html" class="contact-btn reveal">Say Hello →</a>
+    </section>
+
+    <!-- Newsletter -->
+    <div class="newsletter-bar">
+        <div class="newsletter-inner">
+            <div class="newsletter-text">
+                <h3>Stay in the frame</h3>
+                <p>New work, prints, and behind-the-scenes — once a month, no spam.</p>
+            </div>
+            <form class="newsletter-form" onsubmit="return false;">
+                <input type="email" placeholder="Your email" required aria-label="Email Address" />
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <span class="footer-copy">© 2026 Elena Voss. All rights reserved.</span>
+            <ul class="footer-links">
+                <li><a href="https://instagram.com/elenavoss">Instagram</a></li>
+                <li><a href="https://behance.net/elenavoss">Behance</a></li>
+                <li><a href="prints.html">Prints</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        /* ── Scroll Reveal ── */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        /* ── Lightbox ── */
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lb-img');
+
+        document.querySelectorAll('[data-lb]').forEach(item => {
+            item.addEventListener('click', () => {
+                const src = item.querySelector('img').src;
+                lbImg.src = src;
+                lb.classList.add('active');
+                lb.focus();
+            });
+        });
+
+        lb.addEventListener('click', () => lb.classList.remove('active'));
+        document.getElementById('lb-close').addEventListener('click', (e) => {
+            e.stopPropagation();
+            lb.classList.remove('active');
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') lb.classList.remove('active');
+        });
+    </script>
+    <script src="shared.js"></script>
+
+</body>
+
+</html>
